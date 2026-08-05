@@ -7,9 +7,16 @@ class ApiService {
   static const String _baseUrl = 'https://pokeapi.co/api/v2/pokemon';
   static const Duration _timeout = Duration(seconds: 15);
 
-  Future<List<PokemonModel>> getPokemons() async {
+  Future<List<PokemonModel>> getPokemons({
+    int offset = 0,
+    int limit = 20,
+  }) async {
     final response = await http
-        .get(Uri.parse('$_baseUrl?limit=20'))
+        .get(
+          Uri.parse(
+            '$_baseUrl?offset=$offset&limit=$limit',
+          ),
+        )
         .timeout(_timeout);
 
     if (response.statusCode == 200) {

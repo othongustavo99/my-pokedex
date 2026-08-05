@@ -5,11 +5,15 @@ import '../models/pokemon_model.dart';
 class PokemonCard extends StatelessWidget {
   final PokemonModel pokemon;
   final VoidCallback onTap;
+  final bool isFavorite;
+  final VoidCallback onFavoriteTap;
 
   const PokemonCard({
     super.key,
     required this.pokemon,
     required this.onTap,
+    required this.isFavorite,
+    required this.onFavoriteTap,
   });
 
   @override
@@ -65,7 +69,22 @@ class PokemonCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: Colors.grey),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: onFavoriteTap,
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.grey,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.chevron_right,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
