@@ -231,27 +231,27 @@ class _HomePageState extends State<HomePage> {
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _errorMessage != null
-              ? ErrorView(
-                  message: _errorMessage!,
-                  onRetry: _loadPokemons,
-                )
-              : Column(
-                  children: [
-                    PokemonSearchBar(
-                      onChanged: _filterPokemons,
-                    ),
-                    Expanded(
-                      child: PokemonList(
-                        pokemons: _filteredPokemons,
-                        controller: _scrollController,
-                        isLoadingMore: _isLoadingMore,
-                        onTap: _openDetails,
-                        isFavorite: _isFavorite,
-                        onFavoriteTap: _toggleFavorite,
-                      ),
-                    ),
-                  ],
+          ? ErrorView(
+              message: _errorMessage!,
+              onRetry: _loadPokemons,
+            )
+          : Column(
+              children: [
+                PokemonSearchBar(
+                  onChanged: _filterPokemons,
                 ),
+                Expanded(
+                  child: PokemonList(
+                    pokemons: _filteredPokemons,
+                    controller: _scrollController,
+                    isLoadingMore: _isLoadingMore,
+                    onTap: _openDetails,
+                    isFavorite: _isFavorite,
+                    onFavoriteTap: _toggleFavorite,
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
