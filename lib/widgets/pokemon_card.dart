@@ -19,34 +19,51 @@ class PokemonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
         onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: pokemon.image,
-                width: 80,
-                height: 80,
-                placeholder: (context, url) => const SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: Center(
-                    child: CircularProgressIndicator(strokeWidth: 2),
+              // Imagem
+              Hero(
+                tag: pokemon.id,
+                child: Container(
+                  width: 72,
+                  height: 72,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: pokemon.image,
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => const Center(
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.broken_image,
+                      size: 32,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
-                errorWidget: (context, url, error) => const SizedBox(
-                  width: 80,
-                  height: 80,
-                  child: Icon(Icons.broken_image, size: 40),
-                ),
               ),
-              const SizedBox(width: 16),
+
+              const SizedBox(width: 14),
+
+              // Nome e número
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,36 +71,48 @@ class PokemonCard extends StatelessWidget {
                     Text(
                       '#${pokemon.id.padLeft(3, '0')}',
                       style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 14,
+                        color: Colors.grey.shade500,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       pokemon.displayName,
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: onFavoriteTap,
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : Colors.grey,
+
+              // Botão de favorito
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: onFavoriteTap,
+                  borderRadius: BorderRadius.circular(30),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      transitionBuilder: (child, animation) {
+                        return ScaleTransition(
+                          scale: animation,
+                          child: child,
+                        );
+                      },
+                      child: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        key: ValueKey(isFavorite),
+                        color: isFavorite ? Colors.red : Colors.grey.shade400,
+                        size: 26,
+                      ),
                     ),
                   ),
-                  const Icon(
-                    Icons.chevron_right,
-                    color: Colors.grey,
-                  ),
-                ],
+                ),
               ),
             ],
           ),

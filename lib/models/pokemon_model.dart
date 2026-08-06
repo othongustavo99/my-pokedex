@@ -23,7 +23,7 @@ class PokemonModel {
   }
 
   String get image {
-    return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
+    return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png';
   }
 
   String get displayName => name[0].toUpperCase() + name.substring(1);
