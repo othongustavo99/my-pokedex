@@ -9,6 +9,9 @@ import 'favorites_page.dart';
 import '../storage/favorites_storage.dart';
 import '../widgets/shimmer.dart';
 import '../widgets/type_filter.dart';
+import '../main.dart';
+import '../utils/page_transitions.dart';
+import '../storage/pokemon_cache.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,6 +27,9 @@ class _HomePageState extends State<HomePage> {
   String _currentQuery = '';
   String? _selectedType;
   List<PokemonModel> _typeFilteredPokemons = [];
+  bool _isGrid = false;
+  final PokemonCache _pokemonCache = PokemonCache();
+  bool _isOffline = false; // true quando a lista veio do cache
 
   List<PokemonModel> _pokemons = [];
   List<PokemonModel> _filteredPokemons = [];
@@ -149,6 +155,7 @@ class _HomePageState extends State<HomePage> {
       _selectedType = null;
       _currentQuery = '';
       _typeFilteredPokemons = [];
+      _isOffline = false;
     });
 
     try {
@@ -159,24 +166,44 @@ class _HomePageState extends State<HomePage> {
 
       if (!mounted) return;
 
+      // Salva no cache para uso offline
+      await _pokemonCache.savePokemons(result);
+
       setState(() {
         _pokemons = result;
         _filteredPokemons = List<PokemonModel>.from(result);
         _syncFavoritesFromPokemons(result);
         _isLoading = false;
+        _isOffline = false;
       });
     } catch (_) {
+      // API falhou → tenta cache
+      final cached = await _pokemonCache.loadPokemons();
       if (!mounted) return;
-      setState(() {
-        _errorMessage =
-            'Não foi possível carregar os Pokémon.\nVerifique sua conexão e tente novamente.';
-        _isLoading = false;
-      });
+
+      if (cached.isNotEmpty) {
+        setState(() {
+          _pokemons = cached;
+          _filteredPokemons = List<PokemonModel>.from(cached);
+          _syncFavoritesFromPokemons(cached);
+          _isLoading = false;
+          _isOffline = true;
+          _hasMore = false; // sem paginação offline
+          _errorMessage = null;
+        });
+      } else {
+        setState(() {
+          _errorMessage =
+              'Não foi possível carregar os Pokémon.\nVerifique sua conexão e tente novamente.';
+          _isLoading = false;
+          _isOffline = false;
+        });
+      }
     }
   }
 
   Future<void> _loadMorePokemons() async {
-    if (_isLoadingMore || !_hasMore) return;
+    if (_isLoadingMore || !_hasMore || _isOffline) return;
 
     setState(() {
       _isLoadingMore = true;
@@ -197,19 +224,21 @@ class _HomePageState extends State<HomePage> {
           _hasMore = false;
         } else {
           _pokemons.addAll(result);
-          // Mantém o filtro atual se houver busca ativa
-          _filteredPokemons = List<PokemonModel>.from(_pokemons);
+          if (_currentQuery.isEmpty && _selectedType == null) {
+            _filteredPokemons = List<PokemonModel>.from(_pokemons);
+          }
           _syncFavoritesFromPokemons(result);
         }
         _isLoadingMore = false;
       });
+
+      // Atualiza cache com a lista completa carregada
+      await _pokemonCache.savePokemons(_pokemons);
     } catch (e) {
       if (!mounted) return;
-
       setState(() {
         _isLoadingMore = false;
       });
-
       debugPrint('Erro ao carregar mais Pokémon: $e');
     }
   }
@@ -217,14 +246,23 @@ class _HomePageState extends State<HomePage> {
   void _openDetails(PokemonModel pokemon) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => PokemonDetailsPage(pokemon: pokemon),
+      FadeSlidePageRoute(
+        page: PokemonDetailsPage(pokemon: pokemon),
       ),
     );
   }
 
   Future<void> _onTypeSelected(String? type) async {
     if (type == _selectedType) return;
+    if (_isOffline && type != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Filtro por tipo precisa de internet'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
 
     setState(() {
       _selectedType = type;
@@ -314,11 +352,18 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           IconButton(
+            tooltip: _isGrid ? 'Ver em lista' : 'Ver em grade',
+            onPressed: () => setState(() => _isGrid = !_isGrid),
+            icon: Icon(
+              _isGrid ? Icons.view_list_rounded : Icons.grid_view_rounded,
+            ),
+          ),
+          IconButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => FavoritesPage(
+                FadeSlidePageRoute(
+                  page: FavoritesPage(
                     favorites: List<PokemonModel>.from(_favorites),
                     onFavoriteTap: _toggleFavorite,
                     onPokemonTap: _openDetails,
@@ -341,25 +386,82 @@ class _HomePageState extends State<HomePage> {
               child: const Icon(Icons.favorite),
             ),
           ),
+          IconButton(
+            tooltip: 'Tema',
+            onPressed: () {
+              final app = PokedexApp.of(context);
+              final current = app.themeMode;
+              final next = switch (current) {
+                ThemeMode.system => ThemeMode.light,
+                ThemeMode.light => ThemeMode.dark,
+                ThemeMode.dark => ThemeMode.system,
+              };
+              app.setThemeMode(next);
+
+              final label = switch (next) {
+                ThemeMode.light => 'Claro',
+                ThemeMode.dark => 'Escuro',
+                ThemeMode.system => 'Sistema',
+              };
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Tema: $label'),
+                  duration: const Duration(seconds: 1),
+                  behavior: SnackBarBehavior.floating,
+                ),
+              );
+            },
+            icon: Icon(
+              switch (PokedexApp.of(context).themeMode) {
+                ThemeMode.light => Icons.light_mode,
+                ThemeMode.dark => Icons.dark_mode,
+                ThemeMode.system => Icons.brightness_auto,
+              },
+            ),
+          ),
         ],
       ),
       body: _isLoading
           ? const PokemonListSkeleton()
-          : _errorMessage != null
-          ? ErrorView(
-              message: _errorMessage!,
-              onRetry: _loadPokemons,
-            )
           : Column(
               children: [
-                PokemonSearchBar(onChanged: _filterPokemons),
-                TypeFilterBar(
-                  selectedType: _selectedType,
-                  onTypeSelected: _onTypeSelected,
-                ),
-                const SizedBox(height: 8),
+                if (_isOffline)
+                  MaterialBanner(
+                    content: const Text(
+                      'Modo offline — mostrando dados salvos',
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    leading: const Icon(Icons.wifi_off, size: 20),
+                    backgroundColor: Colors.orange.shade100,
+                    actions: [
+                      TextButton(
+                        onPressed: _loadPokemons,
+                        child: const Text('Tentar de novo'),
+                      ),
+                    ],
+                  ),
+                // Busca e filtro ficam sempre visíveis (exceto no loading inicial)
+                if (_errorMessage == null || _filteredPokemons.isNotEmpty) ...[
+                  PokemonSearchBar(onChanged: _filterPokemons),
+                  TypeFilterBar(
+                    selectedType: _selectedType,
+                    onTypeSelected: _onTypeSelected,
+                  ),
+                  const SizedBox(height: 8),
+                ],
                 Expanded(
-                  child: _isSearching
+                  child: _errorMessage != null && _filteredPokemons.isEmpty
+                      ? ErrorView(
+                          message: _errorMessage!,
+                          onRetry: () {
+                            if (_selectedType != null) {
+                              _onTypeSelected(_selectedType);
+                            } else {
+                              _loadPokemons();
+                            }
+                          },
+                        )
+                      : _isSearching
                       ? const PokemonListSkeleton(itemCount: 6)
                       : RefreshIndicator(
                           onRefresh: () async {
@@ -378,6 +480,7 @@ class _HomePageState extends State<HomePage> {
                             onTap: _openDetails,
                             isFavorite: _isFavorite,
                             onFavoriteTap: _toggleFavorite,
+                            isGrid: _isGrid,
                           ),
                         ),
                 ),

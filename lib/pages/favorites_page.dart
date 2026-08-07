@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/pokemon_model.dart';
 import '../widgets/pokemon_list.dart';
 
-class FavoritesPage extends StatelessWidget {
+class FavoritesPage extends StatefulWidget {
   final List<PokemonModel> favorites;
   final ValueChanged<PokemonModel> onFavoriteTap;
   final ValueChanged<PokemonModel> onPokemonTap;
@@ -15,15 +15,36 @@ class FavoritesPage extends StatelessWidget {
   });
 
   @override
+  State<FavoritesPage> createState() => _FavoritesPageState();
+}
+
+class _FavoritesPageState extends State<FavoritesPage> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          favorites.isEmpty ? 'Favoritos' : 'Favoritos (${favorites.length})',
+          widget.favorites.isEmpty
+              ? 'Favoritos'
+              : 'Favoritos (${widget.favorites.length})',
         ),
         centerTitle: true,
       ),
-      body: favorites.isEmpty
+      body: widget.favorites.isEmpty
           ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,12 +74,12 @@ class FavoritesPage extends StatelessWidget {
               ),
             )
           : PokemonList(
-              pokemons: favorites,
-              controller: ScrollController(),
+              pokemons: widget.favorites,
+              controller: _scrollController,
               isLoadingMore: false,
-              onTap: onPokemonTap,
+              onTap: widget.onPokemonTap,
               isFavorite: (_) => true,
-              onFavoriteTap: onFavoriteTap,
+              onFavoriteTap: widget.onFavoriteTap,
             ),
     );
   }

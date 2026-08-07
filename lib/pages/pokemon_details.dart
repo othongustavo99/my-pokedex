@@ -7,6 +7,7 @@ import '../services/api_service.dart';
 import '../utils/pokemon_colors.dart';
 import '../widgets/error_view.dart';
 import '../widgets/shimmer.dart';
+import '../storage/details_cache.dart';
 
 class PokemonDetailsPage extends StatefulWidget {
   final PokemonModel pokemon;
@@ -35,6 +36,8 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     _loadDetails();
   }
 
+  final DetailsCache _detailsCache = DetailsCache();
+
   Future<void> _loadDetails() async {
     setState(() {
       _isLoading = true;
@@ -45,6 +48,8 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
       final result = await _apiService.getPokemonDetails(widget.pokemon.id);
       if (!mounted) return;
 
+      await _detailsCache.save(widget.pokemon.id, result);
+
       setState(() {
         _details = result;
         _isLoading = false;
@@ -52,11 +57,23 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
 
       _loadEvolutions();
     } catch (_) {
+      final cached = await _detailsCache.load(widget.pokemon.id);
       if (!mounted) return;
-      setState(() {
-        _errorMessage = 'Não foi possível carregar os detalhes deste Pokémon.';
-        _isLoading = false;
-      });
+
+      if (cached != null) {
+        setState(() {
+          _details = cached;
+          _isLoading = false;
+        });
+        // Evoluções sem cache — tenta mesmo assim ou ignora
+        _loadEvolutions();
+      } else {
+        setState(() {
+          _errorMessage =
+              'Não foi possível carregar os detalhes deste Pokémon.';
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -95,7 +112,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
         : PokemonColors.getColor(_details!.types.first);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: _isLoading
           ? const PokemonDetailsSkeleton()
           : _errorMessage != null
