@@ -15,7 +15,7 @@ Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento of
 
 ### Tela de Boas-vindas
 
-<img src="assets/screenshots/screenshot (3).png" width="300">
+<img src="assets/screenshots/screenshot (8).png" width="300">
 
 ### Lista e Grade (Tema Claro)
 
@@ -37,7 +37,7 @@ Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento of
 
 |                             Stats                             |                           Evoluções                           |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-| <img src="assets/screenshots/screenshot (2).png" width="250"> | <img src="assets/screenshots/screenshot (8).png" width="250"> |
+| <img src="assets/screenshots/screenshot (2).png" width="250"> | <img src="assets/screenshots/screenshot (3).png" width="250"> |
 
 ### Favoritos
 
