@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'pages/welcome_page.dart';
 import 'storage/theme_storage.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const PokedexApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.immersiveSticky,
+  );
 }
 
 class PokedexApp extends StatefulWidget {
@@ -12,7 +18,6 @@ class PokedexApp extends StatefulWidget {
   @override
   State<PokedexApp> createState() => _PokedexAppState();
 
-  /// Acesso ao estado do tema de qualquer lugar.
   static _PokedexAppState of(BuildContext context) {
     return context.findAncestorStateOfType<_PokedexAppState>()!;
   }
@@ -44,7 +49,7 @@ class _PokedexAppState extends State<PokedexApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Pokédex',
+      title: "Othon's Pokédex",
       themeMode: _themeMode,
       theme: ThemeData(
         useMaterial3: true,
@@ -56,7 +61,7 @@ class _PokedexAppState extends State<PokedexApp> {
         colorSchemeSeed: Colors.red,
         brightness: Brightness.dark,
       ),
-      home: const HomePage(),
+      home: const WelcomePage(),
     );
   }
 }

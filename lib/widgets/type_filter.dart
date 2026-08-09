@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/pokemon_colors.dart';
 
-/// Lista oficial de tipos da PokeAPI.
 const List<String> kPokemonTypes = [
   'normal',
   'fire',

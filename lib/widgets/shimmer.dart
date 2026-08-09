@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Animação de shimmer reutilizável (sem dependência externa).
 class Shimmer extends StatefulWidget {
   final Widget child;
   final Duration duration;
@@ -58,7 +57,6 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   }
 }
 
-/// Bloco cinza usado dentro do shimmer.
 class ShimmerBox extends StatelessWidget {
   final double? width;
   final double height;
@@ -84,7 +82,6 @@ class ShimmerBox extends StatelessWidget {
   }
 }
 
-/// Skeleton de um card da lista de Pokémon.
 class PokemonCardSkeleton extends StatelessWidget {
   const PokemonCardSkeleton({super.key});
 
@@ -120,7 +117,6 @@ class PokemonCardSkeleton extends StatelessWidget {
   }
 }
 
-/// Lista de skeletons para o loading inicial / busca.
 class PokemonListSkeleton extends StatelessWidget {
   final int itemCount;
 
@@ -136,7 +132,6 @@ class PokemonListSkeleton extends StatelessWidget {
   }
 }
 
-/// Skeleton da tela de detalhes.
 class PokemonDetailsSkeleton extends StatelessWidget {
   const PokemonDetailsSkeleton({super.key});
 

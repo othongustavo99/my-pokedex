@@ -14,7 +14,6 @@ class PokemonModel {
     );
   }
 
-  /// Extrai o ID da URL da PokeAPI de forma segura.
   String get id {
     final segments = Uri.parse(
       url,

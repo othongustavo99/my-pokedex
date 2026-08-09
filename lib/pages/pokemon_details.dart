@@ -65,7 +65,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
           _details = cached;
           _isLoading = false;
         });
-        // Evoluções sem cache — tenta mesmo assim ou ignora
+
         _loadEvolutions();
       } else {
         setState(() {

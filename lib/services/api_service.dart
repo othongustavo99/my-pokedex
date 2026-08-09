@@ -99,7 +99,6 @@ class ApiService {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      // Quando busca por nome, a API retorna o Pokémon completo
       return [
         PokemonModel(
           name: data['name'] as String,
@@ -108,7 +107,6 @@ class ApiService {
       ];
     }
 
-    // Se não encontrou, retorna lista vazia (não lança erro)
     return [];
   }
 
@@ -129,7 +127,6 @@ class ApiService {
     return null;
   }
 
-  /// Retorna todos os Pokémon de um determinado tipo.
   Future<List<PokemonModel>> getPokemonsByType(String type) async {
     final response = await http
         .get(Uri.parse('https://pokeapi.co/api/v2/type/${type.toLowerCase()}'))

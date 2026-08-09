@@ -29,15 +29,13 @@ class _HomePageState extends State<HomePage> {
   List<PokemonModel> _typeFilteredPokemons = [];
   bool _isGrid = false;
   final PokemonCache _pokemonCache = PokemonCache();
-  bool _isOffline = false; // true quando a lista veio do cache
+  bool _isOffline = false;
 
   List<PokemonModel> _pokemons = [];
   List<PokemonModel> _filteredPokemons = [];
 
-  /// IDs dos favoritos (fonte da verdade para persistência e checagem).
   final Set<String> _favoriteIds = {};
 
-  /// Models dos favoritos que já conhecemos (para a página de favoritos).
   List<PokemonModel> _favorites = [];
 
   final ScrollController _scrollController = ScrollController();
@@ -58,7 +56,6 @@ class _HomePageState extends State<HomePage> {
     _init();
   }
 
-  /// Carrega favoritos primeiro e depois a lista de Pokémon.
   Future<void> _init() async {
     await _loadFavorites();
     await _loadPokemons();
@@ -91,18 +88,15 @@ class _HomePageState extends State<HomePage> {
         ..addAll(ids);
     });
 
-    // Busca os dados dos favoritos que ainda não temos em memória
     final List<PokemonModel> loadedFavorites = [];
 
     for (final id in ids) {
-      // Já temos esse Pokémon na lista principal?
       final existing = _pokemons.where((p) => p.id == id).toList();
       if (existing.isNotEmpty) {
         loadedFavorites.add(existing.first);
         continue;
       }
 
-      // Não tem → busca na API
       final pokemon = await _apiService.getPokemonById(id);
       if (pokemon != null) {
         loadedFavorites.add(pokemon);
@@ -116,7 +110,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  /// Sincroniza a lista de models favoritos com os Pokémon já carregados.
   void _syncFavoritesFromPokemons(List<PokemonModel> source) {
     for (final pokemon in source) {
       if (_favoriteIds.contains(pokemon.id) &&
@@ -166,7 +159,6 @@ class _HomePageState extends State<HomePage> {
 
       if (!mounted) return;
 
-      // Salva no cache para uso offline
       await _pokemonCache.savePokemons(result);
 
       setState(() {
@@ -188,7 +180,7 @@ class _HomePageState extends State<HomePage> {
           _syncFavoritesFromPokemons(cached);
           _isLoading = false;
           _isOffline = true;
-          _hasMore = false; // sem paginação offline
+          _hasMore = false;
           _errorMessage = null;
         });
       } else {
@@ -232,7 +224,6 @@ class _HomePageState extends State<HomePage> {
         _isLoadingMore = false;
       });
 
-      // Atualiza cache com a lista completa carregada
       await _pokemonCache.savePokemons(_pokemons);
     } catch (e) {
       if (!mounted) return;
@@ -348,7 +339,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokédex'),
+        title: const Text("Othon's Pokédex"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -440,7 +431,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                // Busca e filtro ficam sempre visíveis (exceto no loading inicial)
+
                 if (_errorMessage == null || _filteredPokemons.isNotEmpty) ...[
                   PokemonSearchBar(onChanged: _filterPokemons),
                   TypeFilterBar(
