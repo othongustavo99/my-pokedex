@@ -1,5 +1,5 @@
 name: Othon_Pokedex
-description: "A new Flutter project."
+description: "A modern Pokedéx application built with Flutter and PokeAPI."
 publish_to: 'none'
 
 version: 1.0.0+1

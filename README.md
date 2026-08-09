@@ -1,86 +1,105 @@
+<div align="center">
+
 # 🔴 Othon's Pokédex
 
-Uma Pokédex moderna e completa feita com Flutter.  
+Uma Pokédex moderna e completa feita com Flutter.
 Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento offline.
 
-![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)
-![Dart](https://img.shields.io/badge/Dart-3.x-0175C2?logo=dart)
-![Material 3](https://img.shields.io/badge/Material%203-Design-red)
-![License](https://img.shields.io/badge/License-MIT-green)
+</div>
 
 ---
+
+<div align="center">
 
 ## 📱 Screenshots
 
 ### Tela de Boas-vindas
-<img src="assets/screenshots/screenshot%20(4).png" width="250"/>
+
+<img src="assets/screenshots/screenshot (1).png" width="300">
 
 ### Lista e Grade (Tema Claro)
-| Lista | Grade |
-|:-----:|:-----:|
-| <img src="assets/screenshots/screenshot%20(1).png" width="220"/> | <img src="assets/screenshots/screenshot%20(7).png" width="220"/> |
+
+|                             Lista                             |                             Grade                             |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------: |
+| <img src="assets/screenshots/screenshot (2).png" width="250"> | <img src="assets/screenshots/screenshot (3).png" width="250"> |
 
 ### Tema Escuro
-| Lista | Grade |
-|:-----:|:-----:|
-| <img src="assets/screenshots/screenshot%20(5).png" width="220"/> | <img src="assets/screenshots/screenshot%20(6).png" width="220"/> |
+
+|                             Lista                             |                             Grade                             |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------: |
+| <img src="assets/screenshots/screenshot (4).png" width="250"> | <img src="assets/screenshots/screenshot (5).png" width="250"> |
 
 ### Filtro por Tipo + Busca
-<img src="assets/screenshots/screenshot%20(8).png" width="250"/>
+
+<img src="assets/screenshots/screenshot (6).png" width="300">
 
 ### Página de Detalhes
-| Stats | Evoluções |
-|:-----:|:---------:|
-| <img src="assets/screenshots/screenshot%20(2).png" width="220"/> | <img src="assets/screenshots/screenshot%20(3).png" width="220"/> |
+
+|                             Stats                             |                           Evoluções                           |
+| :-----------------------------------------------------------: | :-----------------------------------------------------------: |
+| <img src="assets/screenshots/screenshot (7).png" width="250"> | <img src="assets/screenshots/screenshot (8).png" width="250"> |
 
 ### Favoritos
-<img src="assets/screenshots/screenshot%20(9).png" width="250"/>
+
+<img src="assets/screenshots/screenshot (9).png" width="300">
+
+</div>
 
 ---
+
+<div align="center">
 
 ## ✨ Funcionalidades
 
-- 🏠 **Tela de boas-vindas** animada (fade + pulse)
-- 📋 **Lista de Pokémon** com scroll infinito (paginação)
-- 🗂️ **Modo Lista e Grade**
-- 🔍 **Busca** por nome em tempo real
-- 🎯 **Filtro por tipo** (Fire, Water, Dragon, etc.)
-- ❤️ **Sistema de favoritos** persistente
-- 🌙 **Tema claro / escuro / sistema**
-- 📴 **Cache offline** (funciona sem internet após o primeiro uso)
-- 📄 **Página de detalhes** completa:
-  - Tipos
-  - Altura, peso e total de stats
-  - Habilidades
-  - Status base com barras
-  - Cadeia de evolução
-- 🖼️ **Imagens em cache** com `cached_network_image`
-- ✨ **Transições suaves** entre telas
-- 📱 **Layout responsivo** e imersivo (esconde barras do sistema)
+</div>
+
+* 🏠 **Tela de boas-vindas** animada (fade + pulse)
+* 📋 **Lista de Pokémon** com scroll infinito (paginação)
+* 🗂️ **Modo Lista e Grade**
+* 🔍 **Busca** por nome em tempo real
+* 🎯 **Filtro por tipo** (Fire, Water, Dragon, etc.)
+* ❤️ **Sistema de favoritos** persistente
+* 🌙 **Tema claro / escuro / sistema**
+* 📴 **Cache offline** (funciona sem internet após o primeiro uso)
+* 📄 **Página de detalhes** completa:
+
+  * Tipos
+  * Altura, peso e total de stats
+  * Habilidades
+  * Status base com barras
+  * Cadeia de evolução
+* 🖼️ **Imagens em cache** com `cached_network_image`
+* ✨ **Transições suaves** entre telas
+* 📱 **Layout responsivo** e imersivo (esconde barras do sistema)
 
 ---
 
+<div align="center">
+
 ## 🛠️ Tecnologias
 
-| Tecnologia               | Uso                              |
-|--------------------------|----------------------------------|
-| Flutter                  | Framework principal              |
-| Dart                     | Linguagem                        |
-| http                     | Requisições à PokéAPI            |
-| cached_network_image     | Cache de imagens de rede         |
-| shared_preferences       | Persistência local (favoritos e tema) |
-| Material 3               | Design System                    |
+|      Tecnologia      | Uso                                   |
+| :------------------: | :------------------------------------ |
+|        Flutter       | Framework principal                   |
+|         Dart         | Linguagem                             |
+|         http         | Requisições à PokéAPI                 |
+| cached_network_image | Cache de imagens de rede              |
+|  shared_preferences  | Persistência local (favoritos e tema) |
+|      Material 3      | Design System                         |
 
 ---
 
 ## 🚀 Como rodar
 
 ### Pré-requisitos
-- Flutter SDK **3.12+**
-- Android Studio / VS Code / Cursor
-- Emulador ou dispositivo físico
+
+* Flutter SDK **3.12+**
+* Android Studio / VS Code / Cursor
+* Emulador ou dispositivo físico
 
 ### Passos
+
+</div>
 
 ```bash
 # 1. Clone o repositório
@@ -91,13 +110,16 @@ cd Othon_Pokedex
 flutter pub get
 
 # 3. Rode o app
-flutter run 
+flutter run
 ```
 
----
+<div align="center">
 
 ## 📁 Estrutura do Projeto
 
+</div>
+
+```text
 lib/
 ├── main.dart
 ├── models/
@@ -127,11 +149,15 @@ lib/
     ├── type_filter.dart
     ├── shimmer.dart
     └── error_view.dart
+```
 
----
+<div align="center">
 
 ## 🎨 Assets
 
+</div>
+
+```text
 assets/
 ├── back/
 │   └── image.jpg              # Imagem da tela de boas-vindas
@@ -142,29 +168,35 @@ assets/
     ├── screenshot (2).png
     ├── ...
     └── screenshot (9).png
+```
 
----
+<div align="center">
 
 ## 📡 API
 
-Este projeto consome a PokéAPI.
+Este projeto consome a **PokéAPI**.
 
 ---
 
 ## 📦 Dependências principais
 
+```yaml
 dependencies:
   flutter:
     sdk: flutter
   http: ^1.5.0
   cached_network_image: ^3.4.1
   shared_preferences: ^2.5.3
+```
 
 ---
 
 ## 📄 Licença
+
 Este projeto está sob a licença MIT.
 
 ---
 
-Feito com ❤️ por Othon
+### Feito com ❤️ por Othon
+
+</div>
