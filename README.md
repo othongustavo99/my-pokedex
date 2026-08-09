@@ -15,49 +15,29 @@ Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento of
 
 ### Tela de Boas-vindas
 
-<<<<<<< HEAD
-<img src="assets/screenshots/screenshot (4).png" width="300">
-=======
 <img src="assets/screenshots/screenshot4.png" width="300">
->>>>>>> 590a10e (feat: atualiza WelcomeScreen)
 
 ### Lista e Grade (Tema Claro)
 
 |                             Lista                             |                             Grade                             |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-<<<<<<< HEAD
-| <img src="assets/screenshots/screenshot (1).png" width="250"> | <img src="assets/screenshots/screenshot (7).png" width="250"> |
-=======
 | <img src="assets/screenshots/screenshot1.png" width="250"> | <img src="assets/screenshots/screenshot7.png" width="250"> |
->>>>>>> 590a10e (feat: atualiza WelcomeScreen)
 
 ### Tema Escuro
 
 |                             Lista                             |                             Grade                             |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-<<<<<<< HEAD
-| <img src="assets/screenshots/screenshot (5).png" width="250"> | <img src="assets/screenshots/screenshot (6).png" width="250"> |
-
-### Filtro por Tipo + Busca
-
-<img src="assets/screenshots/screenshot (8).png" width="300">
-=======
 | <img src="assets/screenshots/screenshot5.png" width="250"> | <img src="assets/screenshots/screenshot6.png" width="250"> |
 
 ### Filtro por Tipo + Busca
 
 <img src="assets/screenshots/screenshot8.png" width="300">
->>>>>>> 590a10e (feat: atualiza WelcomeScreen)
 
 ### Página de Detalhes
 
 |                             Stats                             |                           Evoluções                           |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-<<<<<<< HEAD
-| <img src="assets/screenshots/screenshot (2).png" width="250"> | <img src="assets/screenshots/screenshot (3).png" width="250"> |
-=======
 | <img src="assets/screenshots/screenshot2.png" width="250"> | <img src="assets/screenshots/screenshot3.png" width="250"> |
->>>>>>> 590a10e (feat: atualiza WelcomeScreen)
 
 ### Favoritos
 
