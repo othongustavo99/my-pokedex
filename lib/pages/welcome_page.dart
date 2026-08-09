@@ -74,7 +74,7 @@ class _WelcomePageState extends State<WelcomePage>
           children: [
             // Imagem de fundo
             Image.asset(
-              'assets/back/image.jpg',
+              'assets/back/image.png',
               fit: BoxFit.cover,
             ),
 
