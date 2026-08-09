@@ -15,13 +15,13 @@ Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento of
 
 ### Tela de Boas-vindas
 
-<img src="assets/screenshots/screenshot (7).png" width="300">
+<img src="assets/screenshots/screenshot (3).png" width="300">
 
 ### Lista e Grade (Tema Claro)
 
 |                             Lista                             |                             Grade                             |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-| <img src="assets/screenshots/screenshot (1).png" width="250"> | <img src="assets/screenshots/screenshot (3).png" width="250"> |
+| <img src="assets/screenshots/screenshot (1).png" width="250"> | <img src="assets/screenshots/screenshot (7).png" width="250"> |
 
 ### Tema Escuro
 
