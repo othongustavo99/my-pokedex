@@ -72,14 +72,9 @@ class _WelcomePageState extends State<WelcomePage>
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Imagem de fundo
             Image.asset(
               'assets/back/image.png',
               fit: BoxFit.cover,
-            ),
-
-            Container(
-              color: Colors.black.withValues(alpha: 0.40),
             ),
 
             SafeArea(
@@ -88,37 +83,14 @@ class _WelcomePageState extends State<WelcomePage>
                 child: Column(
                   children: [
                     const Spacer(flex: 2),
-
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(
-                        'BEM VINDO A MINHA POKEDEX',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.1,
-                          height: 1.3,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black87,
-                              blurRadius: 10,
-                              offset: Offset(2, 2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    const Spacer(flex: 3),
+                    const Spacer(flex: 2),
 
                     ScaleTransition(
                       scale: _pulseAnimation,
                       child: const Padding(
                         padding: EdgeInsets.only(bottom: 48),
                         child: Text(
-                          'toque na tela para continuar',
+                          'Toque na tela para continuar',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
