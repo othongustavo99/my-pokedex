@@ -27,11 +27,11 @@ Design limpo, animações suaves, suporte a tema claro/escuro e funcionamento of
 
 |                             Lista                             |                             Grade                             |
 | :-----------------------------------------------------------: | :-----------------------------------------------------------: |
-| <img src="assets/screenshots/screenshot (8).png" width="250"> | <img src="assets/screenshots/screenshot (5).png" width="250"> |
+| <img src="assets/screenshots/screenshot (5).png" width="250"> | <img src="assets/screenshots/screenshot (6).png" width="250"> |
 
 ### Filtro por Tipo + Busca
 
-<img src="assets/screenshots/screenshot (6).png" width="300">
+<img src="assets/screenshots/screenshot (8).png" width="300">
 
 ### Página de Detalhes
 
